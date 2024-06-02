@@ -1,0 +1,123 @@
+The ``0-add_integer`` module
+======================
+
+Using ``add_integer``
+-------------------
+
+Import ``add_integer`` from ``0-add_integer`` module:
+
+	>>> add_integer = __import__('0-add_integer').add_integer
+
+Now use it:
+
+Invalid arguments
+=================
+
+::
+
+	>>> add_integer('a')
+	Traceback (most recent call last):
+		...
+	TypeError: a must be an integer
+
+	>>> add_integer([])
+	Traceback (most recent call last):
+		...
+	TypeError: a must be an integer
+
+	>>> add_integer('a', 4)
+	Traceback (most recent call last):
+		...
+	TypeError: a must be an integer
+
+	>>> add_integer([], 4.0)
+	Traceback (most recent call last):
+		...
+	TypeError: a must be an integer
+
+	>>> add_integer(4, 'b')
+	Traceback (most recent call last):
+		...
+	TypeError: b must be an integer
+
+	>>> add_integer(4.0, [])
+	Traceback (most recent call last):
+		...
+	TypeError: b must be an integer
+
+
+Checks for `NaN`/`nan`
+======================
+
+::
+
+	>>> add_integer(float('nan'))
+	Traceback (most recent call last):
+		...
+	ValueError: cannot convert float NaN to integer
+
+	>>> add_integer(3, float('nan'))
+	Traceback (most recent call last):
+		...
+	ValueError: cannot convert float NaN to integer
+
+
+Checks for `Infinity floats` arguments
+======================================
+
+::
+
+	>>> add_integer(float('inf'))
+	Traceback (most recent call last):
+		...
+	OverflowError: cannot convert float infinity to integer
+
+	>>> add_integer(3.4, float('inf'))
+	Traceback (most recent call last):
+		...
+	OverflowError: cannot convert float infinity to integer
+
+
+Valid arguments
+===============
+
+::
+
+	>>> add_integer(0)
+	98
+
+	>>> add_integer(4)
+	102
+
+	>>> add_integer(10.9777876)
+	108
+
+	>>> add_integer(4, 10)
+	14
+
+	>>> add_integer(2.759, 6)
+	8
+
+	>>> add_integer(4, 90.5566)
+	94
+
+	>>> add_integer(20.6665, 78.766576)
+	98
+
+	>>> add_integer(-3)
+	95
+
+	>>> add_integer(-3.87676)
+	95
+
+	>>> add_integer(-100)
+	-2
+
+	>>> add_integer(-100.87777, -67.567)
+	-167
+
+	>>> result = add_integer(2.544, 7.7567)
+	>>> type(result)
+	<class 'int'>
+
+End of test
