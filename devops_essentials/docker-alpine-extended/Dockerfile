@@ -1,1 +1,9 @@
-From alpine:latestRUN apk add --no-cache curlVOLUME /dataCOPY config.txt /app/config.txtCMD ["sh", "-c", "echo 'Hello, Docker Volumes!' > /data/hello.txt && cat /data/hello.txt"]
+From alpine:latest
+
+RUN apk add --no-cache curl
+
+VOLUME /data
+
+COPY config.txt /app/config.txt
+
+CMD ["sh", "-c", "echo 'Hello, Docker Volumes!' > /data/hello.txt && cat /data/hello.txt"]
