@@ -1,1 +1,39 @@
-import xml.etree.ElementTree as ETdef serialize_to_xml(dictionary, filename):  """Serializes a Python dictionary to XML and saves it to a file.  Args:    dictionary: The Python dictionary to serialize.    filename: The filename to save the XML data.  """  root = ET.Element("data")  for key, value in dictionary.items():    element = ET.SubElement(root, key)    element.text = str(value)  # Ensure value is a string for XML  with open(filename, 'wb') as f:    ET.indent(root, space="\t", level=0)  # Indent for readability    ET.ElementTree(root).write(f, encoding='utf-8')  print(f"Dictionary serialized to {filename}")def deserialize_from_xml(filename):  """Deserializes XML data from a file to a Python dictionary.  Args:    filename: The filename containing the XML data.  Returns:    A Python dictionary reconstructed from the XML data.  """  try:    tree = ET.parse(filename)    root = tree.getroot()    data = {}    for child in root:      data[child.tag] = child.text    return data  except FileNotFoundError:    print(f"Error: File '{filename}' not found.")    return Noneif __name__ == "__main__":  # ... Your sample data and usage here (optional)  pass
+import xml.etree.ElementTree as ET
+
+def serialize_to_xml(dictionary, filename):
+    """
+    Serialize a Python dictionary into XML format and save it to a file.
+
+    Args:
+    - dictionary (dict): Python dictionary to serialize.
+    - filename (str): Filename to save the XML data.
+
+    Returns:
+    - None
+    """
+    root = ET.Element('data')
+    for key, value in dictionary.items():
+        child = ET.SubElement(root, key)
+        child.text = str(value)  # Convert value to string for XML serialization
+
+    tree = ET.ElementTree(root)
+    tree.write(filename)
+
+def deserialize_from_xml(filename):
+    """
+    Deserialize XML data from a file into a Python dictionary.
+
+    Args:
+    - filename (str): Filename from which to read XML data.
+
+    Returns:
+    - dict: Deserialized Python dictionary.
+    """
+    tree = ET.parse(filename)
+    root = tree.getroot()
+
+    dictionary = {}
+    for child in root:
+        dictionary[child.tag] = child.text  # Convert text back to appropriate Python type if needed
+
+    return dictionary
