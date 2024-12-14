@@ -1,1 +1,27 @@
-#!/usr/bin/python3"""Defines functions that serialize and deserialize data"""import jsondef serialize_and_save_to_file(data, filename):  """Serializes a Python dictionary to JSON and saves it to a file.  Args:    data: A Python dictionary to serialize.    filename: The filename of the output JSON file.  """  with open(filename, 'w') as f:    json.dump(data, f)  print(f"Data serialized and saved to '{filename}'.")def load_and_deserialize(filename):  """Loads and deserializes JSON data from a file to a Python dictionary.  Args:    filename: The filename of the input JSON file.  Returns:    A Python dictionary with the deserialized data.  """  with open(filename, 'r') as f:    data = json.load(f)  return data
+#!/usr/bin/python3
+"""Defines functions that serialize and deserialize data"""
+import json
+
+
+
+def serialize_and_save_to_file(data, filename):
+    """Function serializes data to JSON
+    Args:
+        data: Python dictionary
+        filename: File name of JSON file
+    """
+
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(data, f)
+
+def load_and_deserialize(filename):
+    """Function desirializes JSON data into python dictionery
+    Args:
+        filename: file to read data from
+    Return:
+        returns the python string
+    """
+
+    with open(filename, "r", encoding="utf-8") as f:
+        dictionery = json.load(f)
+    return dictionery
