@@ -1,1 +1,29 @@
-#!/usr/bin/python3"""Defines function that converts csv to json"""import csvimport jsondef convert_csv_to_json(csv_filename):  """Converts CSV data to JSON and writes it to a file.  Args:    csv_filename: The filename of the CSV file to convert.  Returns:    True if conversion is successful, False otherwise.  """  try:    with open(csv_filename, 'r') as csvfile, open('data.json', 'w') as jsonfile:      # Read CSV data using DictReader      reader = csv.DictReader(csvfile)      # Convert rows to list of dictionaries      data = [row for row in reader]      # Serialize data to JSON and write to file      json.dump(data, jsonfile, indent=4)      print(f"Data from '{csv_filename}' has been converted to 'data.json'.")      return True  except FileNotFoundError:    print(f"Error: File '{csv_filename}' not found.")    return False# Example Usageif __name__ == "__main__":  csv_file = "data.csv"  converted = convert_csv_to_json(csv_file)  if not converted:    print("Conversion failed.")
+#!/usr/bin/python3
+"""Defines function that converts csv to json"""
+import csv
+import json
+
+
+def convert_csv_to_json(csv_file):
+    """Function writes data to data.json
+    Args:
+        csv_file: csv file to convert
+        data.json: json file to write to
+    """
+
+    data = []
+    try:
+        with open(csv_file, encoding="utf-8") as csvf:
+            csvReader = csv.DictReader(csvf)
+            for row in csvReader:
+                data.append(row)
+
+    except FileNotFoundError:
+        return False
+
+    try:
+        with open("data.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+    except:
+        return False
+    return True
