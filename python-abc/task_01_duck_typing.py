@@ -1,99 +1,45 @@
-from abc import ABC, abstractmethod
-import math
+class VerboseList(list):
+    """A subclass of list that provides notifications for list operations."""
 
-class Shape(ABC):
-    """Abstract base class for shapes."""
-
-    @abstractmethod
-    def area(self):
-        """Calculate the area of the shape.
-
-        Returns:
-            float: The area of the shape.
-        """
-        pass
-
-    @abstractmethod
-    def perimeter(self):
-        """Calculate the perimeter of the shape.
-
-        Returns:
-            float: The perimeter of the shape.
-        """
-        pass
-
-class Circle(Shape):
-    """Class representing a circle, inheriting from Shape."""
-
-    def __init__(self, radius):
-        """Initialize a Circle with a given radius.
+    def append(self, item):
+        """Append an item to the list and print a notification.
 
         Args:
-            radius (float): The radius of the circle.
+            item: The item to be added to the list.
         """
-        self.radius = radius
+        super().append(item)
+        print(f"Added {item} to the list.")
 
-    def area(self):
-        """Calculate the area of the circle.
-
-        Returns:
-            float: The area of the circle.
-        """
-        return math.pi * self.radius ** 2
-
-    def perimeter(self):
-        """Calculate the perimeter of the circle.
-
-        Returns:
-            float: The perimeter of the circle.
-        """
-        return 2 * math.pi * self.radius
-
-class Rectangle(Shape):
-    """Class representing a rectangle, inheriting from Shape."""
-
-    def __init__(self, width, height):
-        """Initialize a Rectangle with a given width and height.
+    def extend(self, items):
+        """Extend the list with items and print a notification.
 
         Args:
-            width (float): The width of the rectangle.
-            height (float): The height of the rectangle.
+            items: The iterable of items to add to the list.
         """
-        self.width = width
-        self.height = height
+        super().extend(items)
+        print(f"Extended the list with {len(items)} items.")
 
-    def area(self):
-        """Calculate the area of the rectangle.
+    def remove(self, item):
+        """Remove the first occurrence of an item from the list and print a notification.
+
+        Args:
+            item: The item to be removed from the list.
+        
+        Raises:
+            ValueError: If the item is not found in the list.
+        """
+        super().remove(item)
+        print(f"Removed {item} from the list.")
+
+    def pop(self, index=-1):
+        """Remove and return an item at the given index and print a notification.
+
+        Args:
+            index (int, optional): The index of the item to be removed. Defaults to -1 (the last item).
 
         Returns:
-            float: The area of the rectangle.
+            The item that was removed from the list.
         """
-        return self.width * self.height
-
-    def perimeter(self):
-        """Calculate the perimeter of the rectangle.
-
-        Returns:
-            float: The perimeter of the rectangle.
-        """
-        return 2 * (self.width + self.height)
-
-def shape_info(shape):
-    """Print the area and perimeter of a shape.
-
-    Args:
-        shape (Shape): An object that has area and perimeter methods.
-    """
-    print(f"Area: {shape.area()}")
-    print(f"Perimeter: {shape.perimeter()}")
-
-# Example usage:
-if __name__ == "__main__":
-    circle = Circle(5)
-    rectangle = Rectangle(4, 7)
-
-    print("Circle:")
-    shape_info(circle)  # Should print the area and perimeter of the circle
-
-    print("\nRectangle:")
-    shape_info(rectangle)  # Should print the area and perimeter of the rectangle
+        item = super().pop(index)
+        print(f"Popped {item} from the list.")
+        return item
