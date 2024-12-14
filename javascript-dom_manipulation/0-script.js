@@ -1,1 +1,2 @@
-document.querySelector('header').setAttribute('style', 'color: #FF0000;');
+const myHeader = document.body.querySelector('header');
+myHeader.style.color = "#FF0000";
