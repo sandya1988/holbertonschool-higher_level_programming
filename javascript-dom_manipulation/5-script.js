@@ -1,3 +1,6 @@
-$('DIV#add_item').click(function () {
-    $('UL.my_list').append('<li>Item</li>');
-  });
+const myHeader = document.body.querySelector("header");
+
+const myUpdate = document.body.querySelector("#update_header");
+myUpdate.addEventListener("click", () => {
+    myHeader.textContent = "New Header!!!";
+})
