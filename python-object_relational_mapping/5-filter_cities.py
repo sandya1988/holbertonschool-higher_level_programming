@@ -1,30 +1,35 @@
 #!/usr/bin/python3
-"""Module for Selecting cities"""
+"""script that takes in the name of a state as an argument
+and lists all cities of that state, using the database
+"""
 
-if __name__ == '__main__':
-    from sys import argv
-    import MySQLdb
+import MySQLdb
+from sys import argv
 
-    db = MySQLdb.connect(
-        user=argv[1],
-        password=argv[2],
-        database=argv[3]
-    )
-    cursor = db.cursor()
+if __name__ == "__main__":
+    connexion = MySQLdb.connect(
+        host="localhost", port=3306, user=argv[1], passwd=argv[2], db=argv[3])
 
-    cursor.execute('SELECT c.name, s.name \
-                    FROM cities AS c \
-                    INNER JOIN states AS s ON s.id = c.state_id ')
+    argv_4 = argv[4].split(';')[0]
 
-    cities = []
-    for city in cursor.fetchall():
-        if city[1] == argv[4]:
-            cities.append(city[0])
+    curs = connexion.cursor()
+    curs.execute("""
+                SELECT cities.name
+                FROM cities
+                INNER JOIN states ON cities.state_id = states.id
+                WHERE states.name = '{}'
+                ORDER BY cities.id ASC;
+                """.format(argv_4))
 
-    print(", ".join(cities))
+    rows = curs.fetchall()
+    liste_cities = ()
 
-    if cursor:
-        cursor.close()
-    if db:
-        db.close()
-        
+    if len(rows) > 0:
+        print(rows[0][0], end="")
+    for row in rows[1:]:
+        print(", " + row[0], end="")
+
+    print()
+    curs.close()
+    connexion.close()
+    
